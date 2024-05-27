@@ -2,8 +2,10 @@
 #define HOST_H
 
 #include "address.h"
+#include "link.h"
 #include "packet.h"
 #include "service.h"
+#include <sys/wait.h>
 #include <vector>
 
 class Host : public Node {
@@ -25,6 +27,13 @@ public:
 
   // 링크를 랜덤으로 하나 선택하여 패킷을 전송한다.
   void send(Packet *packet);
+
+
+
+  // custom
+  int clientPort = 1000;
+
+  void receive(Packet* packet) override;
 };
 
 #endif

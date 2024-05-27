@@ -15,6 +15,10 @@ private:
 public:
   Node() : id_(nextId_++) {}
   int id() const { return id_; }
+  std::vector<Link*> links_;
+  virtual ~Node() {};
+
+  virtual void receive(Packet* packet) {};
 };
 
 #endif

@@ -9,6 +9,9 @@ class Node;
 class Link {
   friend class LinkInstaller;
 
+public:
+  void sendPacket(Node* sender, Packet* packet);
+
 private:
   Link(Node *nodeA, Node *nodeB) : nodeA_(nodeA), nodeB_(nodeB) {}
 

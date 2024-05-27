@@ -4,6 +4,7 @@
 #include "../link_installer.h"
 #include "../manual_router.h"
 #include "../message_service_installer.h"
+#include "../node.h"
 #include <vector>
 
 #define ECHO_PORT 3000
