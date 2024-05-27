@@ -7,6 +7,7 @@
 #include "service.h"
 #include <sys/wait.h>
 #include <vector>
+#include <map>
 
 class Host : public Node {
   friend class ServiceInstaller;
@@ -17,6 +18,9 @@ private:
 
   // 설치된 서비스 목록
   std::vector<Service *> services_;
+
+  std::map<short, Service *> portToService_;
+  int clientPort_ = 1000;
 
 public:
   Address address() { return address_; }
@@ -31,8 +35,6 @@ public:
 
 
   // custom
-  int clientPort = 1000;
-
   void receive(Packet* packet) override;
 };
 

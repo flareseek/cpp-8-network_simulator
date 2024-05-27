@@ -19,6 +19,7 @@ protected:
 
 public:
   short getPort();
+  void setPort(short port);
   virtual void takePacket(Packet* packet) {};
 };
 

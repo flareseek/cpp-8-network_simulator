@@ -14,7 +14,7 @@ void EchoService::send(Packet* oldPacket) {
   short destPort = oldPacket->srcPort();
 
   Packet* newPacket = new Packet(srcAddress, destAddress, srcPort, destPort, oldPacket->data());
-
   this->host_->send(newPacket);
-}
 
+  delete oldPacket;
+}

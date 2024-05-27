@@ -3,7 +3,19 @@
 #include <iostream>
 
 void Host::initialize() {
-
+  std::vector<Service*>::iterator it;
+  for (it = this->services_.begin(); it != this->services_.end(); it++) {
+    Service* service = *it;
+    short port = service->getPort();
+    if (port < 0) port = this->clientPort_;
+    while (this->portToService_.find(port) != this->portToService_.end()) {
+      std::cout << "Host #" << this->id() << ": service port conflict (" << port << ")" << std::endl;
+      port = ++(this->clientPort_);
+    }
+    service->setPort(port);
+    this->portToService_[port] = service;
+    this->clientPort_ ++;
+  }
 }
 
 void Host::send(Packet* packet) {

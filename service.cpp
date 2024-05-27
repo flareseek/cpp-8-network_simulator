@@ -1,5 +1,9 @@
 #include "service.h"
 
 short Service::getPort() {
-  return port_;
+  return this->port_;
+}
+
+void Service::setPort(short port) {
+  this->port_ = port;
 }

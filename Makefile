@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -g -Wall -Werror -std=c++11
 
-all: first second
+all: first
 
 first.o: scenarios/first.cpp
 	$(CC) $(CFLAGS) -c scenarios/first.cpp *.cpp

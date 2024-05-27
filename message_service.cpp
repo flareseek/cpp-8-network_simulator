@@ -16,4 +16,5 @@ void MessageService::send(std::string message) {
 
 void MessageService::takePacket(Packet* packet) {
   std::cout << "MessageService: received \"" << packet->dataString() << "\" from " << packet->srcAddress().toString() << ":" << packet->srcPort() << std::endl;
+  delete packet;
 }
