@@ -3,18 +3,23 @@
 #include <iostream>
 
 void Host::initialize() {
+  this->openPort();
+}
+
+void Host::openPort() {
   std::vector<Service*>::iterator it;
   for (it = this->services_.begin(); it != this->services_.end(); it++) {
     Service* service = *it;
     short port = service->getPort();
-    if (port < 0) port = this->clientPort_;
-    while (this->portToService_.find(port) != this->portToService_.end()) {
-      std::cout << "Host #" << this->id() << ": service port conflict (" << port << ")" << std::endl;
-      port = ++(this->clientPort_);
+
+    if (port < 0) port = this->INIT_CLIENT_PORT;
+    while(this->portToService_.find(port) != this->portToService_.end()) {
+      // std::cout << "Host #" << this->id() << ": service port conflict (" << port << ")" << std::endl;
+      port++;
     }
+
     service->setPort(port);
     this->portToService_[port] = service;
-    this->clientPort_ ++;
   }
 }
 

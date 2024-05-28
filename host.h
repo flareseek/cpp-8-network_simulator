@@ -20,7 +20,8 @@ private:
   std::vector<Service *> services_;
 
   std::map<short, Service *> portToService_;
-  int clientPort_ = 1000;
+  const short INIT_CLIENT_PORT = 1000;
+  void openPort();
 
 public:
   Address address() { return address_; }
