@@ -20,7 +20,7 @@ protected:
 public:
   short getPort();
   void setPort(short port);
-  virtual void takePacket(Packet* packet) {};
+  virtual void takePacket(Packet* packet) = 0;
 };
 
 #endif

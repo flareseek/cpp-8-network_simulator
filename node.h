@@ -20,7 +20,7 @@ public:
   int id() const { return id_; }
   virtual ~Node() {};
 
-  virtual void receive(Packet* packet) {};
+  virtual void receive(Packet* packet) = 0;
 };
 
 #endif
