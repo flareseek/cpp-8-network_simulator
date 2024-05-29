@@ -48,3 +48,11 @@ void Host::receive(Packet* packet) {
   std::cout << "Host #" << this->id() << ": received packet, destination port: " << packet->destPort() << std::endl;
   service->takePacket(packet);
 }
+
+Host::~Host() {
+  for (std::vector<Service*>::iterator it = this->services_.begin(); it != this->services_.end(); it++) {
+    Service* service = *it; 
+    std::cout << "delete service"  << std::endl;
+    delete service;
+  }
+}
