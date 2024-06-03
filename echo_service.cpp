@@ -1,9 +1,14 @@
 #include "echo_service.h"
+#include "simulator.h"
 #include <iostream>
+#include <string>
 
 void EchoService::takePacket(Packet* packet) {
-  std::cout << "EchoService: received \"" << packet->dataString() << "\" from " << packet->srcAddress().toString() << ":" << packet->srcPort() << ", send reply with same data" << std::endl;
-  this->send(packet);
+  Object::log("received \"" + packet->dataString() + "\" from " + packet->srcAddress().toString() + ":" + std::to_string(packet->srcPort()) + ", send reply with same data");
+
+  Simulator::schedule(0.0, [this, packet]() {
+      this->send(packet);
+      });
 }
 
 void EchoService::send(Packet* oldPacket) {
@@ -14,7 +19,9 @@ void EchoService::send(Packet* oldPacket) {
   short destPort = oldPacket->srcPort();
 
   Packet* newPacket = new Packet(srcAddress, destAddress, srcPort, destPort, oldPacket->data());
-  this->host_->send(newPacket);
+  Simulator::schedule(0.0, [this, newPacket]() {
+      this->host_->send(newPacket);
+      });
 
   delete oldPacket;
 }

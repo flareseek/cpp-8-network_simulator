@@ -18,6 +18,8 @@ private:
   MessageService(Host *host, short port, Address destAddress, short destPort)
       : Service(host, port), destAddress_(destAddress), destPort_(destPort) {}
 
+  std::string name() override { return "MessageService"; }
+
 public:
   // 메시지를 전송한다
   void send(std::string message);

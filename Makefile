@@ -3,11 +3,11 @@ CFLAGS = -g -Wall -Werror -std=c++11
 
 all: first second
 
-first: first.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o
-	$(CC) $(CFLAGS) -o first first.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o
+first: first.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o simulator.o object.o
+	$(CC) $(CFLAGS) -o first first.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o simulator.o object.o
 
-second: second.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o
-	$(CC) $(CFLAGS) -o second second.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o
+second: second.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o simulator.o object.o
+	$(CC) $(CFLAGS) -o second second.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o simulator.o object.o
 
 first.o: scenarios/first.cpp 
 	$(CC) $(CFLAGS) -c scenarios/first.cpp 
@@ -56,6 +56,14 @@ service_installer.o: service_installer.cpp service_installer.h
 
 service.o: service.cpp service.h
 	$(CC) $(CFLAGS) -c service.cpp
+
+simulator.o: simulator.cpp simulator.h
+	$(CC) $(CFLAGS) -c simulator.cpp
+
+object.o: object.cpp object.h
+	$(CC) $(CFLAGS) -c object.cpp
+
+
 
 clean:
 	rm -f *.o first second

@@ -22,6 +22,7 @@ private:
   std::map<short, Service *> portToService_;
   const short INIT_CLIENT_PORT = 1000;
   void openPort();
+  std::string name() override { return "Host"; }
 
 public:
   Address address() { return address_; }

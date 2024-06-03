@@ -2,10 +2,12 @@
 #define SERVICE_H
 
 #include "node.h"
+#include "object.h"
+#include "packet.h"
 
 class Host;
 
-class Service {
+class Service : public Object {
   friend class ServiceInstaller;
 
 protected:
@@ -17,10 +19,12 @@ protected:
 
   Service(Host *host, int port) : host_(host), port_(port) {}
 
+
 public:
   short getPort();
   void setPort(short port);
   virtual void takePacket(Packet* packet) = 0;
+  virtual void initialize() {}
 
   virtual ~Service() {};
 };

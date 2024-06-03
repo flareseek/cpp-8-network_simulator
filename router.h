@@ -12,7 +12,9 @@ public:
 
 class Router : public Node {
 private:
-  void fowardPacket(Packet* packet);
+  void forwardPacket(Packet* packet, Link* link);
+  Link* findLink(Packet* packet);
+  std::string name() override { return "Router"; }
 
 public :
   void receive(Packet* packet) override;
