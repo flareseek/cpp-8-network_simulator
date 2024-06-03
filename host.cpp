@@ -42,6 +42,7 @@ void Host::receive(Packet* packet) {
     unsigned long fileBytes = packet->data().size();
 
     std::cout << "Host #" << this->id() << ": no service for packet (from: " << srcAddress << ", to: " << destAddress << ", " << fileBytes << " bytes)" << std::endl;
+    delete packet;
     return;
   }
   Service* service = this->portToService_[packet->destPort()];

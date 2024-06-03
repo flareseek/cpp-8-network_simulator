@@ -22,6 +22,7 @@ void Router::fowardPacket(Packet* packet) {
   }
 
   std::cout << "Router #" << this->id() << ": no route for packet (from: " << srcAddress << ", to: " << destAddress << ", " << fileBytes << " bytes)" << std::endl;
+  delete packet;
 }
 
 
