@@ -52,7 +52,7 @@ void Host::receive(Packet* packet) {
 Host::~Host() {
   for (std::vector<Service*>::iterator it = this->services_.begin(); it != this->services_.end(); it++) {
     Service* service = *it; 
-    std::cout << "delete service"  << std::endl;
+    /* std::cout << "delete service"  << std::endl; */
     delete service;
   }
 }
