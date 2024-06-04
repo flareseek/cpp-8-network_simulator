@@ -1,19 +1,32 @@
 CC = g++
 CFLAGS = -g -Wall -Werror -std=c++11
+OBJECTS = echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o simulator.o object.o packet_sink_service.o packet_sink_service_installer.o bulk_send_service.o bulk_send_service_installer.o auto_router.o
 
-all: first second
+all: first second third forth
 
-first: first.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o simulator.o object.o
-	$(CC) $(CFLAGS) -o first first.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o simulator.o object.o
+first: first.o $(OBJECTS)
+	$(CC) $(CFLAGS) -o first first.o $(OBJECTS)
 
-second: second.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o simulator.o object.o
-	$(CC) $(CFLAGS) -o second second.o echo_service_installer.o echo_service.o host.o link_installer.o link.o manual_router.o message_service_installer.o message_service.o node.o packet.o router.o service_installer.o service.o address.o simulator.o object.o
+second: second.o $(OBJECTS)
+	$(CC) $(CFLAGS) -o second second.o $(OBJECTS)
+
+third: third.o $(OBJECTS)
+	$(CC) $(CFLAGS) -o third third.o $(OBJECTS)
+
+forth: forth.o $(OBJECTS)
+	$(CC) $(CFLAGS) -o forth forth.o $(OBJECTS)
 
 first.o: scenarios/first.cpp 
 	$(CC) $(CFLAGS) -c scenarios/first.cpp 
 
 second.o: scenarios/second.cpp 
 	$(CC) $(CFLAGS) -c scenarios/second.cpp 
+
+third.o: scenarios/third.cpp 
+	$(CC) $(CFLAGS) -c scenarios/third.cpp 
+
+forth.o: scenarios/forth.cpp 
+	$(CC) $(CFLAGS) -c scenarios/forth.cpp 
 
 address.o: address.cpp address.h
 	$(CC) $(CFLAGS) -c address.cpp
@@ -63,7 +76,21 @@ simulator.o: simulator.cpp simulator.h
 object.o: object.cpp object.h
 	$(CC) $(CFLAGS) -c object.cpp
 
+packet_sink_service.o: packet_sink_service.cpp packet_sink_service.h
+	$(CC) $(CFLAGS) -c packet_sink_service.cpp
+
+packet_sink_service_installer.o: packet_sink_service_installer.cpp packet_sink_service_installer.h
+	$(CC) $(CFLAGS) -c packet_sink_service_installer.cpp
+
+bulk_send_service.o: bulk_send_service.cpp bulk_send_service.h
+	$(CC) $(CFLAGS) -c bulk_send_service.cpp
+
+bulk_send_service_installer.o: bulk_send_service_installer.cpp bulk_send_service_installer.h
+	$(CC) $(CFLAGS) -c bulk_send_service_installer.cpp
+
+auto_router.o: auto_router.cpp auto_router.h
+	$(CC) $(CFLAGS) -c auto_router.cpp
 
 
 clean:
-	rm -f *.o first second
+	rm -f *.o first second third forth

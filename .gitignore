@@ -2,6 +2,8 @@
 *.exe
 first
 second
+third
+forth
 main
 compile_flags.txt
 .vscode

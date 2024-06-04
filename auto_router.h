@@ -22,6 +22,7 @@ struct NodeInfo {
   double delay;
   Link* link;
 
+  NodeInfo() : isVisited(false), delay(std::numeric_limits<double>::max()), link(nullptr) {};
   NodeInfo(bool isVisited, double delay, Link* link) 
     : isVisited(isVisited), delay(delay), link(link) {};
 };
