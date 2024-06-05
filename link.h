@@ -12,7 +12,9 @@ class Link : public Object {
 
 public:
   ~Link() {};
-  void sendPacket(Node* sender, Packet* packet);
+  /*void sendPacket(Node* sender, Packet* packet);*/
+  void inPacket(Node* sender, Packet* packet);
+  void outPacket(Node* receiver, Packet* packet);
 
   // 매개변수로 주어진 노드가 아닌 반대편 노드를 구한다.
   Node *other(const Node *node) const {

@@ -13,10 +13,10 @@ class EchoService : public Service {
 private:
   EchoService(Host *host, short port) : Service(host, port) {}
   std::string name() override { return "EchoService"; }
+  Packet* generatePacket(Packet* oldPacket);
 
 public:
   void takePacket(Packet* packet) override;
-  void send(Packet* packet);
 };
 
 #endif

@@ -10,12 +10,8 @@ void MessageService::send(std::string message) {
   Address destAddress = this->destAddress_;
   short destPort = this->destPort_;
 
-  Packet* packet = new Packet(srcAddress, destAddress, 
-                              srcPort, destPort, message);
-
-  Simulator::schedule(0.0, [this, packet]() { 
-      Service::host_->send(packet); 
-      });
+  Packet* packet = new Packet(srcAddress, destAddress, srcPort, destPort, message);
+  Service::sendPacket(packet);
 }
 
 void MessageService::takePacket(Packet* packet) {

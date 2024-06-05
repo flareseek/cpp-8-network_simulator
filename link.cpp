@@ -4,12 +4,17 @@
 #include <iostream>
 #include <string>
 
-void Link::sendPacket(Node* sender, Packet* packet) {
-  Object::log("packet in: " + packet->toString() + " from " + sender->toString());
+void Link::inPacket(Node* sender, Packet* packet) {
   Node* receiver = this->other(sender);
 
-  Simulator::schedule(this->delay(), [this, packet, receiver]() {
-      Object::log("packet out: " + packet->toString() + " to " + receiver->toString());
-      receiver->receive(packet);
-      });
+  Object::log("packet in: " + packet->toString() + " from " + sender->toString());
+  Simulator::schedule(Simulator::now() + this->delay_, [this, receiver, packet]() {
+    this->outPacket(receiver, packet);
+  });
 }
+
+void Link::outPacket(Node* receiver, Packet* packet) {
+  Object::log("packet out: " + packet->toString() + " to " + receiver->toString());
+  receiver->receive(packet);
+}
+

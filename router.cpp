@@ -26,10 +26,8 @@ void Router::forwardPacket(Packet* packet, Link* nextLink) {
   }
 
   
-  Simulator::schedule(0.0, [this, packet, nextLink]() {
-      Object::log("forwarding packet: " + packet->toString() + " to " + nextLink->toString());
-      nextLink->sendPacket(this, packet);
-      });
+  Object::log("forwarding packet: " + packet->toString() + " to " + nextLink->toString());
+  nextLink->inPacket(this, packet);
 }
 
 

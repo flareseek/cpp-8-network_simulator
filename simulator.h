@@ -42,7 +42,8 @@ public:
   static void schedule(double time, std::function<void()> function) {
     // 스케줄 큐에 스케줄을 추가한다.
     // TODO: 구현
-    Schedule schedule(Simulator::time_ + time, function);
+    //
+    Schedule schedule(time, function);
     Simulator::eventQueue.push(schedule);
   }
 

@@ -3,9 +3,11 @@
 #include <iterator>
 #include <iostream>
 #include <string>
+#include <vector>
 
 void Host::initialize() {
   this->openPort();
+  this->initializeService();
 }
 
 void Host::openPort() {
@@ -13,27 +15,25 @@ void Host::openPort() {
   for (it = this->services_.begin(); it != this->services_.end(); it++) {
     Service* service = *it;
     short port = service->getPort();
-    if (port != -2) {
-      if (port == -1) port = this->INIT_CLIENT_PORT;
-      while(this->portToService_.find(port) != this->portToService_.end()) {
-        // std::cout << "Host #" << this->id() << ": service port conflict (" << port << ")" << std::endl;
-        port++;
-      }
-
-      service->setPort(port);
-      this->portToService_[port] = service;
+    if (port < 0) port = this->INIT_CLIENT_PORT;
+    while(this->portToService_.find(port) != this->portToService_.end()) {
+      // std::cout << "Host #" << this->id() << ": service port conflict (" << port << ")" << std::endl;
+      port++;
     }
-    service->initialize();
+
+    service->setPort(port);
+    this->portToService_[port] = service;
   }
 }
 
 void Host::send(Packet* packet) {
   // 일단은 0번째 index로 보내기...
   if (this->links_.size() != 0) {
-    Simulator::schedule(0.0, [this, packet]() { 
-        Object::log("sending packet: " + packet->toString());
-        this->links_.front()->sendPacket(this, packet); 
-        });
+    Object::log("sending packet: " + packet->toString());
+    this->links_.front()->inPacket(this, packet); 
+  } else {
+    Object::log("not found a link");
+    delete packet;
   }
 }
 
@@ -44,10 +44,17 @@ void Host::receive(Packet* packet) {
     return;
   }
   Service* service = this->portToService_[packet->destPort()];
-  Simulator::schedule(0.0, [this, packet, service]() {
-      Object::log("received packet: " + packet->toString() + ", forwarding to " + service->toString());
-      service->takePacket(packet);
-      });
+  Object::log("received packet: " + packet->toString() + ", forwarding to " + service->toString());
+
+  service->takePacket(packet);
+}
+
+void Host::initializeService() {
+  std::vector<Service*>::iterator it;
+  for(it = services_.begin(); it != services_.end(); it++) {
+    Service* service = *it;
+    service->initialize();
+  }
 }
 
 Host::~Host() {

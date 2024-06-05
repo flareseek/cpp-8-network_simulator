@@ -12,9 +12,7 @@ class BulkSendService : Service {
   friend class BulkSendServiceInstaller;
 
 public:
-  void takePacket(Packet* packet) override {}
-  void repeat();
-  void send();
+  void sendPacket(Packet* packet) override;
   void initialize() override;
 
 private:
@@ -29,6 +27,8 @@ private:
                   double stopTime = 10.0) : Service(host, -1), destAddress_(destAddress), destPort_(destPort), delay_(delay), startTime_(startTime), stopTime_(stopTime) {}
 
   std::string name() override { return "BulkSendService"; }
+
+  Packet* generatePacket();
 };
 
 #endif
