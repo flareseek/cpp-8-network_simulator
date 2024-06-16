@@ -7,7 +7,7 @@ void Nat::addNatTable(Host* host, short port) {
 }
 
 void Nat::receive(Link* link, Packet* packet) {
-  if (packet->destAddress() == this->address_)
+  if (link == this->wanLink_)
     this->sendPrivateIp(packet);
   else 
     this->sendPublicIp(packet);
