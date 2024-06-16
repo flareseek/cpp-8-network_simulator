@@ -21,7 +21,7 @@ public:
   int id() const { return id_; }
   virtual ~Node() {};
 
-  virtual void receive(Packet* packet) = 0;
+  virtual void receive(Link* link, Packet* packet) = 0;
 };
 
 #endif

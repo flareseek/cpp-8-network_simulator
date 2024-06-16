@@ -1,5 +1,6 @@
 #include "bulk_send_service.h"
 #include "simulator.h"
+#include <string>
 void BulkSendService::initialize() {
   double time = this->startTime_;
   while(time < this->stopTime_) {

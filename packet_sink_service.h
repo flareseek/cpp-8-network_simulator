@@ -8,7 +8,6 @@ class PacketSinkService : public Service {
   friend class PacketSinkServiceInstaller;
 
 public:
-  void initialize() override {}
   void takePacket(Packet* packet) override;
 
 private:

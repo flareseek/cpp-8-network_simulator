@@ -22,7 +22,8 @@ private:
   std::map<short, Service *> portToService_;
   const short INIT_CLIENT_PORT = 1000;
   void openPort();
-  void initializeService();
+  /*void initializeService();*/
+  void applyService(Service* service);
   std::string name() override { return "Host"; }
 
 public:
@@ -31,12 +32,12 @@ public:
   ~Host();
 
   // 호스트와 설치된 서비스를 전부 초기화한다.
-  void initialize();
+  void initialize() override;
 
   // 링크를 랜덤으로 하나 선택하여 패킷을 전송한다.
   void send(Packet *packet);
   // custom
-  void receive(Packet* packet) override;
+  void receive(Link* link, Packet* packet) override;
 };
 
 #endif

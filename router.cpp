@@ -1,9 +1,9 @@
 #include "router.h"
 #include "simulator.h"
 
-void Router::receive(Packet* packet) {
-  Link* link = this->findLink(packet);
-  this->forwardPacket(packet, link);
+void Router::receive(Link* link, Packet* packet) {
+  Link* sendLink = this->findLink(packet);
+  this->forwardPacket(packet, sendLink);
 }
 
 // NOTE: 일단은 같은 목적지가 여러개 있을 때 제일 먼저 저장된 링크를 이용

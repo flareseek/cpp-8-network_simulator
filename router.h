@@ -17,7 +17,7 @@ private:
   std::string name() override { return "Router"; }
 
 public :
-  void receive(Packet* packet) override;
+  void receive(Link* link, Packet* packet) override;
   virtual ~Router() {};
 
 protected:

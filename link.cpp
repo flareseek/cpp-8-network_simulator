@@ -15,6 +15,6 @@ void Link::inPacket(Node* sender, Packet* packet) {
 
 void Link::outPacket(Node* receiver, Packet* packet) {
   Object::log("packet out: " + packet->toString() + " to " + receiver->toString());
-  receiver->receive(packet);
+  receiver->receive(this, packet);
 }
 

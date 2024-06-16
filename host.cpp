@@ -1,4 +1,5 @@
 #include "host.h"
+#include "nat.h"
 #include "simulator.h"
 #include <iterator>
 #include <iostream>
@@ -7,13 +8,17 @@
 
 void Host::initialize() {
   this->openPort();
-  this->initializeService();
+  /*this->initializeService();*/
 }
 
 void Host::openPort() {
   std::vector<Service*>::iterator it;
   for (it = this->services_.begin(); it != this->services_.end(); it++) {
-    Service* service = *it;
+    this->applyService(*it);
+  }
+}
+
+void Host::applyService(Service* service) {
     short port = service->getPort();
     if (port < 0) port = this->INIT_CLIENT_PORT;
     while(this->portToService_.find(port) != this->portToService_.end()) {
@@ -23,7 +28,12 @@ void Host::openPort() {
 
     service->setPort(port);
     this->portToService_[port] = service;
-  }
+    
+    for(Link* link: this->links_) {
+      Nat* nat = dynamic_cast<Nat*>(link->other(this));
+      if (nat == nullptr) continue;
+      nat->addNatTable(this, port);
+    }
 }
 
 void Host::send(Packet* packet) {
@@ -37,7 +47,7 @@ void Host::send(Packet* packet) {
   }
 }
 
-void Host::receive(Packet* packet) {
+void Host::receive(Link* link, Packet* packet) {
   if (this->portToService_.find(packet->destPort()) == this->portToService_.end()) {
     Object::log("no service for packet: " + packet->toString());
     delete packet;
@@ -45,23 +55,22 @@ void Host::receive(Packet* packet) {
   }
   Service* service = this->portToService_[packet->destPort()];
   Object::log("received packet: " + packet->toString() + ", forwarding to " + service->toString());
-
   service->takePacket(packet);
 }
 
-void Host::initializeService() {
-  std::vector<Service*>::iterator it;
-  for(it = services_.begin(); it != services_.end(); it++) {
-    Service* service = *it;
-    service->initialize();
-  }
-}
+/*void Host::initializeService() {*/
+/*  std::vector<Service*>::iterator it;*/
+/*  for(it = services_.begin(); it != services_.end(); it++) {*/
+/*    Service* service = *it;*/
+/*    service->initialize();*/
+/*  }*/
+/*}*/
 
 Host::~Host() {
-  for (std::vector<Service*>::iterator it = this->services_.begin(); it != this->services_.end(); it++) {
-    Service* service = *it; 
-    /* std::cout << "delete service"  << std::endl; */
-    delete service;
-  }
+  /*for (std::vector<Service*>::iterator it = this->services_.begin(); it != this->services_.end(); it++) {*/
+  /*  Service* service = *it; */
+  /*   std::cout << "delete service"  << std::endl; */
+  /*  delete service;*/
+  /*}*/
 }
 
