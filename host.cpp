@@ -48,11 +48,14 @@ void Host::send(Packet* packet) {
 }
 
 void Host::receive(Link* link, Packet* packet) {
+  if (!(packet->destAddress() == this->address_)) return;
+
   if (this->portToService_.find(packet->destPort()) == this->portToService_.end()) {
     Object::log("no service for packet: " + packet->toString());
     delete packet;
     return;
   }
+
   Service* service = this->portToService_[packet->destPort()];
   Object::log("received packet: " + packet->toString() + ", forwarding to " + service->toString());
   service->takePacket(packet);
