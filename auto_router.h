@@ -6,12 +6,12 @@
 #include "link.h"
 #include "router.h"
 #include "service.h"
+#include "nat.h"
 #include <map>
 #include <set>
 #include <limits>
 
-class NodeInfo {
-  public:
+class NodeInfo { public:
     double distance;
     std::set<Link*> links;
     Link* hostLink;
@@ -71,8 +71,13 @@ public:
     
     for (Node* node: nodes) {
       Host* host = dynamic_cast<Host*>(node);
-      if (host == nullptr) continue;
-      this->routingTable_.push_back({ host->address(), store[node].hostLink });
+      if (host == nullptr) {
+        Nat* nat = dynamic_cast<Nat*>(node);
+        if (nat == nullptr) continue;
+        this->routingTable_.push_back({ nat->address(), store[node].hostLink });
+      } else {
+        this->routingTable_.push_back({ host->address(), store[node].hostLink });
+      }
     }
   }
 };

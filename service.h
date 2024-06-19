@@ -25,7 +25,6 @@ public:
   void setPort(short port);
   virtual void takePacket(Packet* packet);
   virtual void sendPacket(Packet* packet);
-  virtual void initialize() {}
 
   virtual ~Service() {};
 };

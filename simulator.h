@@ -47,17 +47,7 @@ public:
     Simulator::eventQueue.push(schedule);
   }
 
-  static void run() {
-    // 모든 스케줄을 실행한다.
-    // TODO: 구현 while (queue가 empty가 아닐때)
-    //
-    while (!Simulator::eventQueue.empty()) {
-      Schedule schedule = Simulator::eventQueue.top();
-      Simulator::time_ = schedule.time();
-      schedule.call();
-      Simulator::eventQueue.pop();
-    }
-  }
+  static void run();
 };
 
 #endif
