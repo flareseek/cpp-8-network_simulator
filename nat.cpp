@@ -31,11 +31,15 @@ void Nat::sendPrivateIp(Packet* packet) {
     if (natEntry.externalPort == packet->destPort()) {
       Packet* newPacket = new Packet(packet->srcAddress(), natEntry.internalAddress, packet->srcPort(), natEntry.internalPort, packet->data());
       for(Link* link: this->links_) {
-        Host* host = dynamic_cast<Host*>(link->other(this));
-        if (host == nullptr) continue;
-        if (host->address() == newPacket->destAddress()) 
-          link->inPacket(this, newPacket);
+        if (link == this->wanLink_) continue;
+        Packet* copyPacket = new Packet(*newPacket);
+        link->inPacket(this, copyPacket);
+        /*Host* host = dynamic_cast<Host*>(link->other(this));*/
+        /*if (host == nullptr) continue;*/
+        /*if (host->address() == newPacket->destAddress()) */
+        /*  link->inPacket(this, newPacket);*/
       }
+      delete newPacket;
     }
   }
 }
