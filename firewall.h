@@ -9,8 +9,7 @@ class FirewallPolicy : public Object {
     std::string name() override { return "FirewallPolicy"; }
 
   public:
-    virtual bool isAllowed(Packet* packet) { return false; }
-    ~FirewallPolicy() override {}
+    virtual bool isAllowed(Packet* packet) = 0;
 };
 
 class Firewall : public Node {
@@ -24,7 +23,6 @@ private:
   public:
     AllowAnyPolicy(short destPort) : destPort_(destPort) {}
     bool isAllowed(Packet* packet) override;
-    ~AllowAnyPolicy() override {}
   };
 
   class AllowSpecificPolicy : public FirewallPolicy {
@@ -38,7 +36,6 @@ private:
     AllowSpecificPolicy(Address srcAddress, short destPort)
         : srcAddress_(srcAddress), destPort_(destPort) {}
     bool isAllowed(Packet* packet) override;
-    ~AllowSpecificPolicy() override {}
   };
 
   std::string name() override { return "Firewall"; }

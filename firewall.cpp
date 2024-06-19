@@ -51,6 +51,7 @@ void Firewall::receiveOutPacket(Packet* packet) {
 }
 
 Firewall::~Firewall() {
+  /* Object 에서 cleanup 하므로 */ 
   /*for(FirewallPolicy* policy : this->policies)*/
   /*  delete policy;*/
 }
